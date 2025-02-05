@@ -99,15 +99,17 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 ```
-test API endpoints using tools like `Postman`. Obtain an access token by making a POST request to `http://127.0.0.1:8000/api/token/` with valid user credentials like below screenshot.
+test API endpoints using tools like `Postman`. Obtain an access token by making a POST request to http://127.0.0.1:8000/api/token/ with valid user credentials like below screenshot.
 
 <img src="https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/1*Qs3_ZKiHJQfO5ACj4Q30aw.png" alt="post request" />
 
-Then, use this access token to make requests to authenticated endpoints like( http://127.0.0.1:8000/ )Type need to change as Bearer Token.
+Then, use this access token to make requests to authenticated endpoints like http://127.0.0.1:8000/ Type need to change as Bearer Token.
 
 <img src="https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/1*Q3zh9tPHDeoFt8c7NO5jwg.png" alt="get request" />
 
 🎉🎉🎉That is it, jwt provides a secure way to authenticate users and access protected resources in your Django API.
 
 next,handle token expiration and refreshing appropriately in your client application.
+
+source: https://medium.com/django-unleashed/securing-django-rest-apis-with-jwt-authentication-using-simple-jwt-a-step-by-step-guide-28efa84666fe
 
