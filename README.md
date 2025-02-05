@@ -112,4 +112,3 @@ Then, use this access token to make requests to authenticated endpoints like htt
 next,handle token expiration and refreshing appropriately in your client application.
 
 source: https://medium.com/django-unleashed/securing-django-rest-apis-with-jwt-authentication-using-simple-jwt-a-step-by-step-guide-28efa84666fe
-
