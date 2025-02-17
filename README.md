@@ -112,3 +112,84 @@ Then, use this access token to make requests to authenticated endpoints like htt
 next,handle token expiration and refreshing appropriately in your client application.
 
 source: https://medium.com/django-unleashed/securing-django-rest-apis-with-jwt-authentication-using-simple-jwt-a-step-by-step-guide-28efa84666fe
+
+
+## BackEnd Fully Functional JWT
+Update `settings.py`:
+```
+INSTALLED_APPS = [
+    ...
+
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+
+    'corsheaders',
+    'api',
+]
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,  # Rotate refresh tokens to prevent reuse
+    'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old refresh tokens after rotation
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    ...
+]
+
+...
+
+CORS_ORIGIN_ALLOW_ALL = True
+```
+
+Update `views.py`:
+```
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
+class Home(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        content = {'message': 'Hello, World!'}
+        return Response(content)
+    
+class Logout(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()  # Now this will work after enabling blacklisting
+
+            return Response({"message": "Successfully logged out."}, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+```
+Update `urls.py`:
+```
+from django.urls import path
+from .views import Home, Logout
+
+
+urlpatterns = [
+    path('', Home.as_view()),
+    path('logout/', Logout.as_view(), name='logout'),
+]
+```
+
+Note: For detailed <mark>Very High Security</mark>, you can create a `BlacklistedToken` model and update `views.py`.For more information, check out the <mark>comments</mark> inside the `models.py` and `views.py` files.
+
+
+
