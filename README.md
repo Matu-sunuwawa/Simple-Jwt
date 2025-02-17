@@ -192,4 +192,10 @@ urlpatterns = [
 Note: For detailed <mark>Very High Security</mark>, you can create a `BlacklistedToken` model and update `views.py`.For more information, check out the <mark>comments</mark> inside the `models.py` and `views.py` files.
 
 
+RUN:
+```
+python manage.py migrate
+python manage.py runserver
+```
 
+![Login Credentials To Generate new access token and new refresh token](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/Login_Credential.png)
