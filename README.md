@@ -216,6 +216,6 @@ python manage.py runserver
 #### After <mark>Access Token</mark> LifeTime Ends
 ![After ACCESS_TOKEN_LIFETIME Ends it can't be used for `login` already it expired.](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/After_Access_Token_Ends.png)
 
-Author: Matyas Sina Adugna
-Email: matyassinaadugna@gmail.com
-Position: Software Engineer
+<h6>Author: Matyas Sina Adugna</h6>
+<h6>Email: matyassinaadugna@gmail.com</h6>
+<h6>Position: Software Engineer</h6>
