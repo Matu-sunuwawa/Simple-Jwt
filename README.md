@@ -201,17 +201,21 @@ python manage.py runserver
 #### Generate a new <mark>Access Token</mark> and <mark>Refresh Token</mark> using valid authentication credentials.
 ![Use Credentials To Generate new access token and new refresh token](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/Login_Credential.png)
 
-#### Login Using Access Token
+#### Login Using <mark>Access Token</mark>
 ![Login Using Access Token](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/Login_With_Access_Token.png)
 
-#### Logout Using Refresh Token
+#### Logout Using <mark>Refresh Token</mark>
 ![Logout `By adding the refresh token to blacklist` or `blacklisting the refresh token`](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/Logout_With_Refresh_Token.png)
 
-#### Check Refresh Token is Blacklisted
+#### Check <mark>Refresh Token</mark> is Blacklisted
 ![Check whether it create new Access Token using Blacklisted Refresh Token or Not](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/Create_Access_Token_After_Logout.png)
 
-#### Before Access Token LifeTime Ends
+#### Before <mark>Access Token</mark> LifeTime Ends
 ![B4 ACCESS_TOKEN_LIFETIME Ends it can be used for `login`.](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/B4%20Ending%20Access_Token_Lifetime.png)
 
-#### After Access Token LifeTime Ends
+#### After <mark>Access Token</mark> LifeTime Ends
 ![After ACCESS_TOKEN_LIFETIME Ends it can't be used for `login` already it expired.](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/After_Access_Token_Ends.png)
+
+Author: Matyas Sina Adugna
+Email: matyassinaadugna@gmail.com
+Position: Software Engineer
