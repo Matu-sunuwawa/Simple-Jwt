@@ -1,0 +1,7 @@
+
+# Installed dependencies
+
+npm i axios
+npm i bootstrap
+npm i react-bootstrap
+npm i react-router-dom
