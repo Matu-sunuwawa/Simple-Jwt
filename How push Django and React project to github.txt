@@ -1,0 +1,19 @@
+
+# Check if frontend is a separate Git repository
+```
+cd frontend
+ls -a
+```
+If you see a `.git` folder inside frontend, it means frontend is a separate Git repository. 
+This can cause issues because Git does not track sub-repositories.
+
+# Fix: Remove the separate Git repo inside frontend
+
+RUN:
+```
+rm -rf .git
+cd ..
+git add frontend
+git commit -m "Added frontend folder"
+git push
+```
