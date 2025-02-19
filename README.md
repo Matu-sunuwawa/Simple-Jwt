@@ -114,7 +114,7 @@ next,handle token expiration and refreshing appropriately in your client applica
 source: https://medium.com/django-unleashed/securing-django-rest-apis-with-jwt-authentication-using-simple-jwt-a-step-by-step-guide-28efa84666fe
 
 
-## BackEnd Fully Functional JWT
+## Fully Functional JWT Authentication in Django (Backend)
 Update `settings.py`:
 ```
 INSTALLED_APPS = [
@@ -216,6 +216,129 @@ python manage.py runserver
 #### After <mark>Access Token</mark> LifeTime Ends
 ![After ACCESS_TOKEN_LIFETIME Ends it can't be used for `login` already it expired.](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/After_Access_Token_Ends.png)
 
-<h6>Author: Matyas Sina Adugna</h6>
-<h6>Email: matyassinaadugna@gmail.com</h6>
-<h6>Position: Software Engineer</h6>
+
+## Fully Functional JWT Authentication in React (Frontend)
+> [!IMPORTANT]
+> Follow the steps below to run the application successfully. Some modules are missing in the repository due to .gitignore, such as `node_modules`.
+
+#### Setting Up the React App
+For this tutorial, we’ll use the traditional method of installing React using Create React App (CRA). However, you can also implement the backend logic using the modern Vite build tool.
+
+1. In your desired directory (e.g., Documents), create a folder for your React app
+2. Run the following command to create the React app:
+```
+npx create-react-app frontend
+```
+3. Install the required dependencies:
+```
+// install packages
+npm i axios bootstrap react-bootstrap react-router-dom
+```
+4. Start the development server:
+```
+npm start
+```
+5. Open your browser and check the app at: `http://localhost:3000/`
+
+<br>
+
+### Project Structure
++ Inside the src folder, create a new folder named `components`.
++ Inside components, create the following files: `Login.js`, `Logout.js`, `Navigation.js`, `Home.js`
++ Next, write the navigation bar code inside `Navigation.js`. [Copy the provided code into Navigation.js].
+
+#### Updating `App.js`
++ Modify `App.js` to include: `useState` and `useEffect` hooks.
++ Modify `App.js` to include: `Route conditions` for authentication handling.
+> [!TIP]
+> Set the Authorization header globally in Axios:
+> ```<mark>axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`<mark>```
+> In axios once you <mark>set `Authorization` header globally</mark> with `axios.defaults.headers.common["Authorization"]`.
+> This means that for any request (whether it's a GET, POST, etc.) made after this line of code runs,
+> axios will automatically attach the `Authorization` header with the `Bearer token`, <mark>so you don't need to manually add the header for every single request.</mark>
+> This is what makes axios so convenient. Without this, you'd have to add headers to each request, like:
+```
+const response = await axios.get(
+  "http://localhost:8000/",
+  {
+    headers: { "Authorization": `Bearer ${accessToken}` },
+    withCredentials: true,
+  }
+);
+```
+This is one of the key benefits of using 🎉 Axios!
+> [!NOTE]
+> Inside App.js:
+> Use `isAuth` to check if the user is authenticated.
+> Pass `setIsAut`h to routes to manage `login/logout` state.
+> Use the `access_token` for authentication if it exists.
+
+#### Implementing Authentication Features
+
+Login Functionality (`Login.js`)
++ Uses `useState` for handling `username`, `password`, and `error`.
++ Uses `useNavigate` for redirecting users without a page reload.
+
+Home Page (`Home.js`)
++ Uses `useState` to store and display `messages` from the backend.
+
+#### Handling Access Token Expiration
+> [!NOTE]  
+> How do we know when the access token expires?
+> To handle this, we use `Axios interceptors`.
+> Interceptors are functions that run `before` or `after` an API request.
+> There are two types of interceptors: `Request interceptor` and `Response interceptor [We use a Response Interceptor to check if the access token has expired.]`
+
+#### Creating an `Axios Interceptor`
+1. Inside the src folder, create a new folder named intercepto
+2. Inside interceptors, create a file named axios.js.
+3. Copy the provided interceptor code into axios.js.
+
+###### The interceptor will:
+- <mark>Detect 401 Unauthorized errors</mark>.
+- <mark>Automatically handle expired tokens</mark>.
+
+No need to worry `axios.js` takes care of everything for you!
+
+#### Importing the Interceptor
+- To apply the Axios interceptor, import it in `index.js`:
+```
+import './interceptors/axios';
+```
+
+#### Logout Functionality (`Logout.js`)
+- Uses `useRef` to <mark>track the first render</mark>.
+- Prevents the logout request from being sent "twice" by checking `isFirstRender`.
+
+#### Conclusion
+- In this guide, we implemented JWT authentication in a React frontend, using `Axios` to handle `API` requests.
+
+
+I hope this guide was helpful.
+
+Thanks for coding along with me!!!😊
+
+#### source code: 
+https://github.com/Matu-sunuwawa/Simple-Jwt
+
+### Author
+<h6>Matyas Sina Adugna</h6>
+<h6>📧 matyassinaadugna@gmail.com</h6>
+<h6>💼 Software Engineer</h6>
+
+
+
+#### Tools Used:
+* Django
+* Django REST Framework
+* ReactJS
+* Bootstrap
+* VS Code
+* GitHub
+* ChatGPT
+
+
+### References
+https://medium.com/@ronakchitlangya1997/jwt-authentication-with-react-js-and-django-c034aae1e60d
+https://medium.com/django-unleashed/securing-django-rest-apis-with-jwt-authentication-using-simple-jwt-a-step-by-step-guide-28efa84666fe
+https://www.django-rest-framework.org/

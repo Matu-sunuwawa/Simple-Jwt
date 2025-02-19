@@ -6,12 +6,10 @@ import { useNavigate } from 'react-router-dom';
 function Home({setIsAuth}) {
 
   const [message, setMessage] = useState('');
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-        setError(null);
         const accessToken = localStorage.getItem('access_token');
         if (!accessToken) {
             navigate('/login');
@@ -32,7 +30,6 @@ function Home({setIsAuth}) {
             setMessage(response.data.message);
         } catch (e) {
             localStorage.clear();
-            setError("Please stop using website for harmful purpose.");
             console.error('Not authenticated:', e);
         }
     };
@@ -41,13 +38,10 @@ function Home({setIsAuth}) {
   }, [navigate]);
 
   return (
-    <div>
-
-        {error && <div className="alert alert-danger">{error}</div>}
-    
-        <div className="form-signin mt-5 text-center">
-          <h3>Hi {message}</h3>
-        </div>
+    <div>    
+      <div className="form-signin mt-5 text-center">
+        <h3>Hi {message}</h3>
+      </div>
     </div>
   )
 }
