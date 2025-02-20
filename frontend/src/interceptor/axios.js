@@ -1,8 +1,4 @@
 
-// how we know or after how much time access token is invalid or not???. 
-// To resolve this problem, we use the interceptor in react js. 
-// Basically, Interceptors are methods which are triggered `Before` or `After` the main method.
-// There are two types of interceptors: `Request interceptor` and `Response interceptor [we have using this one to check the response]`
 import axios from "axios";
 
 let refresh = false;
@@ -13,7 +9,6 @@ axios.interceptors.response.use(
     if (error.response && error.response.status === 401 && !refresh) {
       refresh = true;
       try {
-        // console.log("Refreshing token using:", localStorage.getItem("refresh_token"));
 
         if (localStorage.getItem("refresh_token") !== null) {
           const response = await axios.post(
@@ -26,7 +21,7 @@ axios.interceptors.response.use(
           );
 
           if (response.status === 200) {
-            // Update the access token
+
             axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
             localStorage.setItem("access_token", response.data.access);
             localStorage.setItem("refresh_token", response.data.refresh);
@@ -38,15 +33,19 @@ axios.interceptors.response.use(
             return axios(error.config);
           }
         } else {
-          window.location.href = '/login';
+          if (window.location.pathname !== "/login") {
+            window.location.href = '/login';
+          }
         }
       } catch (err) {
-        window.location.href = '/login';
+        if (window.location.pathname !== "/login") {
+          window.location.href = '/login';
+        }
         console.error("Token refresh failed", err);
       }
     }
     refresh = false;
-    return Promise.reject(error); // Properly return the error
+    return Promise.reject(error);
   }
 );
 
