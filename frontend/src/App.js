@@ -6,28 +6,23 @@ import Home from './component/Home';
 import Navigation from './component/Navigation';
 import Logout from './component/Logout';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import {AuthProvider} from './context/AuthContext';
+import PrivateRoute from './utils/PrivateRoute';
 
 function App() {
 
-    const [isAuth, setIsAuth] = useState(false);
-
-    useEffect(() => {
-        const accessToken = localStorage.getItem("access_token");
-        if (accessToken) {
-            axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        }
-    }, []);
-
     return (
         <BrowserRouter>
-            <Navigation isAuth={isAuth} />
-            <Routes>
-                <Route path="/" element={<Home setIsAuth={setIsAuth} />} />
-                <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-                <Route path="/logout" element={<Logout setIsAuth={setIsAuth} />} />
-            </Routes>
+            <AuthProvider>
+                <Navigation />
+                <Routes>
+                    <Route element={<PrivateRoute />}>
+                        <Route path="/" element={<Home/>} />
+                    </Route>
+                    <Route path="/login" element={<Login/>} />
+                    <Route path="/logout" element={<Logout/>} />
+                </Routes>
+            </AuthProvider>
         </BrowserRouter>
     );
 }
