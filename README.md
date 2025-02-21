@@ -216,6 +216,24 @@ python manage.py runserver
 #### After <mark>Access Token</mark> LifeTime Ends
 ![After ACCESS_TOKEN_LIFETIME Ends it can't be used for `login` already it expired.](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/After_Access_Token_Ends.png)
 
+#### Registration using valid authentication credentials
+![Authorization](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/B4_Register_Credential_Sent.png)
+![Body](https://github.com/Matu-sunuwawa/Simple-Jwt/blob/main/Images/Register_Credentials.png)
+> [!IMPORTANT]
+> Follow the steps below in `Postman` to test the `API` successfully.
+> 1. Authorization: Go to the `Authorization` tab and make sure the `Type` is set to `No Auth`.
+> 2. Body: Go to the `Body` tab, select `raw`, and choose `JSON`.
+Request Format:
+```
+{
+    "first_name":"new",
+    "last_name":"user",
+    "username":"newuser",
+    "email":"newuser@example.com",
+    "password":"newuser123",
+    "password_confirmation":"newuser123"
+}
+```
 
 ## Fully Functional JWT Authentication in React (Frontend)
 > [!IMPORTANT]
