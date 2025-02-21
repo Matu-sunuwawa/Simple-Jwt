@@ -22,7 +22,9 @@ export const AuthProvider = ({ children }) => {
         if (validateToken(accessToken)) {
             localStorage.clear();
             setAuth(false)
-            navigate('/login');
+            if (window.location.pathname !== "/login" && window.location.pathname !== "/register") {
+                navigate('/login');
+            }
             return;
         } else {
             axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -94,6 +96,45 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const submitRegisteration = async (e) => {
+        e.preventDefault();
+        setError(null);
+
+        const first_name = e.target.first_name.value;
+        const last_name = e.target.last_name.value;
+        const username = e.target.username.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const password_confirmation = e.target.password_confirmation.value;
+
+        try {
+            const response = await axios.post(
+                'http://localhost:8000/register/',
+                { first_name, last_name, username, password, password_confirmation, email },
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true,
+                }
+            );
+
+            if (response.data.access && response.data.refresh) {
+                localStorage.setItem('access_token', response.data.access);
+                localStorage.setItem('refresh_token', response.data.refresh);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+                setAuth(true);
+                navigate('/');
+            } else {
+                setError('Invalid response from server. Please try again.');
+            }
+        } catch (err) {
+            if (err.response && err.response.data) {
+                setError(err.response.data.error || 'Registration failed. Please try again.');
+            } else {
+                setError('Registration failed. Please try again.');
+            }
+        }
+    }
+
     const homePage = async () => {
         const accessToken = localStorage.getItem('access_token');
 
@@ -122,6 +163,7 @@ export const AuthProvider = ({ children }) => {
     const ctx = {
         submitLogin,
         submitLogout,
+        submitRegisteration,
         homePage,
         auth,
         message,
