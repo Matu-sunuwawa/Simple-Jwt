@@ -33,12 +33,12 @@ axios.interceptors.response.use(
             return axios(error.config);
           }
         } else {
-          if (window.location.pathname !== "/login") {
+          if (window.location.pathname !== "/login" && window.location.pathname !== "/register") {
             window.location.href = '/login';
           }
         }
       } catch (err) {
-        if (window.location.pathname !== "/login") {
+        if (window.location.pathname !== "/login" && window.location.pathname !== "/register") {
           window.location.href = '/login';
         }
         console.error("Token refresh failed", err);
